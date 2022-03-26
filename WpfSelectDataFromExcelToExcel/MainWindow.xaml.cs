@@ -56,6 +56,7 @@ namespace WpfSelectDataFromExcelToExcel
                 {
                     foreach (IXLRow row in worksheet.RowsUsed().Skip(1))
                     {
+                      
                         T obj = (T)Activator.CreateInstance(typeOfObject);
                         foreach (var prop in properties)
                         {

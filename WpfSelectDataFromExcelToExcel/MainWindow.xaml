@@ -1,0 +1,14 @@
+﻿<Window x:Class="WpfSelectDataFromExcelToExcel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfSelectDataFromExcelToExcel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Start" HorizontalAlignment="Left" Height="80" Margin="56,51,0,0" VerticalAlignment="Top" Width="169" FontSize="18" Click="Button_Click"/>
+        <Label Content="Result:" HorizontalAlignment="Left" Height="38" Margin="56,158,0,0" VerticalAlignment="Top" Width="61" FontSize="16" RenderTransformOrigin="0.447,-0.842"/>
+
+    </Grid>
+</Window>

@@ -56,7 +56,7 @@ namespace WpfSelectDataFromExcelToExcel
                 {
                     foreach (IXLRow row in worksheet.RowsUsed().Skip(1))
                     {
-                      
+
                         T obj = (T)Activator.CreateInstance(typeOfObject);
                         foreach (var prop in properties)
                         {
@@ -67,12 +67,11 @@ namespace WpfSelectDataFromExcelToExcel
                         }
                         list.Add(obj);
                     }
-                    Console.WriteLine("Operacja zakończona powodzeniem.");
+                    ResultLabel.Content = "Sukces";
                 }
-                catch (Exception e)
+                catch (Exception er)
                 {
-
-                    Console.WriteLine(e.Message);
+                    ResultLabel.Content = $"Wystąpił błąd: {er.Message}";
                 }
             }
             return list;

@@ -6,9 +6,19 @@
         xmlns:local="clr-namespace:WpfSelectDataFromExcelToExcel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="LabelResult">
         <Button Content="Start" HorizontalAlignment="Left" Height="80" Margin="56,51,0,0" VerticalAlignment="Top" Width="169" FontSize="18" Click="Button_Click"/>
         <Label Content="Result:" HorizontalAlignment="Left" Height="38" Margin="56,158,0,0" VerticalAlignment="Top" Width="61" FontSize="16" RenderTransformOrigin="0.447,-0.842"/>
+        <Label x:Name="ResultLabel" Content="..." HorizontalAlignment="Left" Height="30" Margin="122,158,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
 
     </Grid>
 </Window>

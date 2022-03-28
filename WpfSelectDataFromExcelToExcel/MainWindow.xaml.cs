@@ -24,6 +24,7 @@ namespace WpfSelectDataFromExcelToExcel
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,13 +66,14 @@ namespace WpfSelectDataFromExcelToExcel
                             var type = prop.PropertyType;
                             prop.SetValue(obj, Convert.ChangeType(val, type));
                         }
-                        list.Add(obj);
+                        if(obj != null)
+                            list.Add(obj);
                     }
-                    ResultLabel.Content = "Sukces";
+                    ActionResultLabel.Content = "Sukces";
                 }
                 catch (Exception er)
                 {
-                    ResultLabel.Content = $"Wystąpił błąd: {er.Message}";
+                    ActionResultLabel.Content = $"Wystąpił błąd: {er.Message}";
                 }
             }
             return list;

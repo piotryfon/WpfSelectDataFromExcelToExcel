@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,9 +28,15 @@ namespace WpfSelectDataFromExcelToExcel
            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var products = ImportExcel<Product>(@"C:\excel\products.xlsx", "products");
+            //Thread.Sleep(3000);
+            await Task.Delay(3000);
+            await CreateNewExcel();
+        }
+        public async Task CreateNewExcel()
+        {
+            var products = await ImportDataFromExcel<Product>(@"C:\excel\products.xlsx", "products");
             var selectedProd = products.Where(p => p.Name != "" && p.Price > 3);
 
             var wb = new XLWorkbook();
@@ -44,7 +51,7 @@ namespace WpfSelectDataFromExcelToExcel
             //col1.Style.Fill.BackgroundColor = XLColor.Orange;
             wb.SaveAs($"c:\\excel\\selected_prod_{DateTime.Now.ToString("MM-dd-yyyy")}.xlsx");
         }
-        public List<T> ImportExcel<T>(string excelFilePath, string sheetName)
+        public async Task <List<T>> ImportDataFromExcel<T>(string excelFilePath, string sheetName)
         {
             List<T> list = new List<T>();
             Type typeOfObject = typeof(T);

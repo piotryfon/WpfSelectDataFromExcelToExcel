@@ -31,13 +31,22 @@ namespace WpfSelectDataFromExcelToExcel
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             //Thread.Sleep(3000);
-            await Task.Delay(3000);
-            await CreateNewExcel();
+            //await Task.Delay(3000);
+            try
+            {
+                await CreateNewExcel();
+            }
+            catch (Exception er)
+            {
+                ActionResultLabel.Content = $"Coś poszło nie tak...Zamknij Excel i spróbuj jeszcze raz. \n {er.Message}";
+
+            }
+          
         }
         public async Task CreateNewExcel()
         {
             var products = await ImportDataFromExcel<Product>(@"C:\excel\products.xlsx", "products");
-            var selectedProd = products.Where(p => p.Name != "" && p.Price > 3);
+            var selectedProd = products.Where(p => p.Name != "" && p.Price < 5);
 
             var wb = new XLWorkbook();
 

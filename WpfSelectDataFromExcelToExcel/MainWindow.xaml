@@ -12,9 +12,8 @@
         <Label Content="Result:" HorizontalAlignment="Left" Height="38" Margin="56,5,0,0" VerticalAlignment="Top" Width="61" 
                FontSize="16" RenderTransformOrigin="0.447,-0.842"/>
         <Label 
-            x:Name="ActionResultLabel" Content="" HorizontalAlignment="Left" Height="30" Margin="56,5,0,0" VerticalAlignment="Top" Width="85"
-            RenderTransformOrigin="0.5,0.5" FontSize="16">
-        </Label>
+            x:Name="ActionResultLabel" Content="" HorizontalAlignment="Left" Height="72" Margin="56,5,0,0" Width="523"
+            RenderTransformOrigin="0.5,0.5" FontSize="10"/>
 
     </StackPanel>
 </Window>

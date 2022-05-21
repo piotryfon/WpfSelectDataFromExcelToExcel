@@ -39,13 +39,13 @@ namespace WpfSelectDataFromExcelToExcel
             catch (Exception er)
             {
                 ActionResultLabel.Content = $"Coś poszło nie tak...Zamknij Excel i spróbuj jeszcze raz. \n {er.Message}";
-
             }
-          
         }
         public async Task CreateNewExcel()
         {
-            var products = await ImportDataFromExcel<Product>(@"C:\excel\products.xlsx", "products");
+            string sourcePath = @"C:\excel\products.xlsx";
+            string resultFilePath = $"c:\\excel\\selected_prod_{DateTime.Now.ToString("MM-dd-yyyy")}.xlsx";
+            var products = await ImportDataFromExcel<Product>(sourcePath, "products");
             var selectedProd = products.Where(p => p.Name != "" && p.Price < 5);
 
             var wb = new XLWorkbook();
@@ -58,7 +58,8 @@ namespace WpfSelectDataFromExcelToExcel
             var col1 = ws.Column("A");
             col1.Width = 20;
             //col1.Style.Fill.BackgroundColor = XLColor.Orange;
-            wb.SaveAs($"c:\\excel\\selected_prod_{DateTime.Now.ToString("MM-dd-yyyy")}.xlsx");
+            wb.SaveAs(resultFilePath);
+            ActionResultLabel.Content = $"Sukces, ścieżka do pliku: {resultFilePath}";
         }
         public async Task <List<T>> ImportDataFromExcel<T>(string excelFilePath, string sheetName)
         {
@@ -73,7 +74,6 @@ namespace WpfSelectDataFromExcelToExcel
                 {
                     foreach (IXLRow row in worksheet.RowsUsed().Skip(1))
                     {
-
                         T obj = (T)Activator.CreateInstance(typeOfObject);
                         foreach (var prop in properties)
                         {
@@ -85,7 +85,6 @@ namespace WpfSelectDataFromExcelToExcel
                         if(obj != null)
                             list.Add(obj);
                     }
-                    ActionResultLabel.Content = "Sukces";
                 }
                 catch (Exception er)
                 {

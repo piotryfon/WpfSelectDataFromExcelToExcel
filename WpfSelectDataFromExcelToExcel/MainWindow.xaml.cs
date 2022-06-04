@@ -59,7 +59,7 @@ namespace WpfSelectDataFromExcelToExcel
             col1.Width = 20;
             //col1.Style.Fill.BackgroundColor = XLColor.Orange;
             wb.SaveAs(resultFilePath);
-            ActionResultLabel.Content = $"Sukces, ścieżka do pliku: {resultFilePath}";
+            ActionResultLabel.Content = $"Ścieżka do pliku: {resultFilePath}";
         }
         public async Task <List<T>> ImportDataFromExcel<T>(string excelFilePath, string sheetName)
         {
@@ -85,10 +85,11 @@ namespace WpfSelectDataFromExcelToExcel
                         if(obj != null)
                             list.Add(obj);
                     }
+                    ErrorResultLabel.Content = $"Bez błędów";
                 }
                 catch (Exception er)
                 {
-                    ActionResultLabel.Content = $"Wystąpił błąd: {er.Message}";
+                    ErrorResultLabel.Content = $"Wystąpił błąd: {er.Message}";
                 }
             }
             return list;

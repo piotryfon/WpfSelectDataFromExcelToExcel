@@ -9,7 +9,7 @@ namespace WpfSelectDataFromExcelToExcel
     internal class Product
     {
         public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int Units { get; set; }
+        public string Price { get; set; }
+        public string Units { get; set; }
     }
 }

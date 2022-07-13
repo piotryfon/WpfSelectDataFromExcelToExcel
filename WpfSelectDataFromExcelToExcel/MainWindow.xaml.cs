@@ -31,22 +31,22 @@ namespace WpfSelectDataFromExcelToExcel
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             //Thread.Sleep(3000);
-            //await Task.Delay(3000);
+           //await Task.Delay(300);
             try
             {
                 await CreateNewExcel();
             }
             catch (Exception er)
             {
-                ActionResultLabel.Content = $"Coś poszło nie tak...Zamknij Excel i spróbuj jeszcze raz. \n {er.Message}";
+                ActionResultLabel.Content = $"Coś poszło nie tak...\n {er.Message}";
             }
         }
         public async Task CreateNewExcel()
         {
             string sourcePath = @"C:\excel\products.xlsx";
-            string resultFilePath = $"c:\\excel\\selected_prod_{DateTime.Now.ToString("MM-dd-yyyy")}.xlsx";
+            string resultFilePath = $"c:\\excel\\selected_prod_{DateTime.Now.ToString("dd-MM-yyyy")}.xlsx";
             var products = await ImportDataFromExcel<Product>(sourcePath, "products");
-            var selectedProd = products.Where(p => p.Name != "" && p.Price < 5);
+            var selectedProd = products.Where(p => p.Name != "Masło");
 
             var wb = new XLWorkbook();
 
@@ -55,8 +55,8 @@ namespace WpfSelectDataFromExcelToExcel
             ws.Cell(1, 2).Value = "Price";
             ws.Cell(1, 3).Value = "Units";
             ws.Cell(2, 1).InsertData(selectedProd);
-            var col1 = ws.Column("A");
-            col1.Width = 20;
+            //var col1 = ws.Column("A");
+            //col1.Width = 20;
             //col1.Style.Fill.BackgroundColor = XLColor.Orange;
             wb.SaveAs(resultFilePath);
             ActionResultLabel.Content = $"Ścieżka do pliku: {resultFilePath}";
@@ -67,7 +67,7 @@ namespace WpfSelectDataFromExcelToExcel
             Type typeOfObject = typeof(T);
             using (IXLWorkbook workbook = new XLWorkbook(excelFilePath))
             {
-                var worksheet = workbook.Worksheets.Where(w => w.Name == sheetName).First();
+                var worksheet = await Task.Run(()=> workbook.Worksheets.Where(w => w.Name == sheetName).First());
                 var properties = typeOfObject.GetProperties();
                 var columns = worksheet.FirstRow().Cells().Select((v, i) => new { Value = v.Value, Index = i + 1 });
                 try
@@ -79,13 +79,15 @@ namespace WpfSelectDataFromExcelToExcel
                         {
                             int colIndex = columns.SingleOrDefault(c => c.Value.ToString() == prop.Name.ToString()).Index;
                             var val = row.Cell(colIndex).Value;
+                           
                             var type = prop.PropertyType;
                             prop.SetValue(obj, Convert.ChangeType(val, type));
                         }
                         if(obj != null)
                             list.Add(obj);
                     }
-                    ErrorResultLabel.Content = $"Bez błędów";
+                    ErrorResultLabel.Foreground = Brushes.Green;
+                    ErrorResultLabel.Content = $"OK";
                 }
                 catch (Exception er)
                 {
